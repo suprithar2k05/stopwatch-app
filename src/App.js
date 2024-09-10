@@ -27,16 +27,18 @@ export default function App() {
     setTimer(0);
   };
 
-  function formatTime(ms) {
-    const totalSeconds = Math.floor(ms / 1000);
-    const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
-    const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(
-      2,
-      "0"
-    );
-    const seconds = String(totalSeconds % 60).padStart(2, "0");
-    const milliseconds = (ms % 1000).toString().padStart(3, "0");
+  function formatTime(time) {
+    // Hours calculation
+    const hours = Math.floor(time / 360000);
 
+    // Minutes calculation
+    const minutes = Math.floor((time % 360000) / 6000);
+
+    // Seconds calculation
+    const seconds = Math.floor((time % 6000) / 100);
+
+    // Milliseconds calculation
+    const milliseconds = time % 100;
     return { hours, minutes, seconds, milliseconds };
   }
 
@@ -44,8 +46,15 @@ export default function App() {
   return (
     <div>
       <h1>Stopwatch</h1>
+      {/* <p>
+        Time:
+        {hours}:{minutes.toString().padStart(2, "0")}:
+        {seconds.toString().padStart(2, "0")}:
+        {milliseconds.toString().padStart(2, "0")}
+      </p> */}
+
       <p>
-        Time: {hours}:{minutes}:{seconds}:{milliseconds}
+        Time: {minutes}:{seconds.toString().padStart(2, "0")}
       </p>
       <button onClick={isRunning ? handleStop : handleStart}>
         {isRunning ? "Stop" : "Start"}
